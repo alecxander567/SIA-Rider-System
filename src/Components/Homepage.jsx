@@ -8,6 +8,11 @@ import {
   FaCheckCircle,
   FaCalendar,
   FaTruck,
+  FaUser,
+  FaMoneyBill,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaCreditCard,
 } from "react-icons/fa";
 import axios from "axios";
 
@@ -219,48 +224,71 @@ function RiderHomepage() {
                 key={order.orderId || index}
                 className="relative bg-white rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col w-full p-8"
               >
+                {/* Truck Icon in Background */}
                 <FaTruck
-                  className={`absolute right-10 top-40 transform -translate-y-1/2 w-50 h-50 opacity-100 pointer-events-none ${
+                  className={`absolute right-15 top-25 transform -translate-y-1/2 w-45 h-45 opacity-100 pointer-events-none ${
                     truckColors[index % truckColors.length]
                   }`}
                 />
+
+                {/* Order Title */}
                 <div className="mb-2 relative z-10">
                   <h3 className="text-xl font-bold truncate">
                     {order.orderName}
                   </h3>
                 </div>
-                <div className="mb-4 relative z-10">
-                  <p className="text-gray-700 truncate">
-                    <span className="font-semibold">Customer:</span>{" "}
+
+                {/* Customer */}
+                <div className="mb-4 relative z-10 flex items-center gap-2 text-gray-700">
+                  <FaUser className="text-blue-500" />
+                  <p className="truncate font-semibold">
                     {order.customer_name}
                   </p>
                 </div>
-                <div className="mb-4 text-gray-700 text-base space-y-1 relative z-10">
-                  <p>
-                    <span className="font-semibold">Quantity:</span>{" "}
-                    {order.quantity} {order.unit}
+
+                {/* Order Details */}
+                <div className="mb-4 text-gray-700 text-base space-y-2 relative z-10">
+                  <p className="flex items-center gap-2">
+                    <FaBox className="text-green-500" />
+                    <span className="font-semibold">
+                      {order.quantity} {order.unit}
+                    </span>
                   </p>
-                  <p>
-                    <span className="font-semibold">Total:</span> ₱
-                    {order.total_price.toFixed(2)}
+                  <p className="flex items-center gap-2">
+                    <FaMoneyBill className="text-yellow-500" />
+                    <span className="font-semibold">
+                      ₱{order.total_price.toFixed(2)}
+                    </span>
                   </p>
-                  <p>
-                    <span className="font-semibold">Status:</span>{" "}
-                    {order.status}
+                  <p className="flex items-center gap-2">
+                    <FaTruck
+                      className={
+                        order.status === "Delivered"
+                          ? "text-green-600"
+                          : order.status === "Cancelled"
+                          ? "text-red-500"
+                          : "text-gray-500"
+                      }
+                    />
+                    <span className="font-semibold">{order.status}</span>
                   </p>
-                  <p>
-                    <span className="font-semibold">Address:</span>{" "}
-                    <span className="truncate">{order.address}</span>
+                  <p className="flex items-center gap-2 pr-16">
+                    <FaMapMarkerAlt className="text-red-500" />
+                    <span className="font-semibold break-words whitespace-normal">
+                      {order.address}
+                    </span>
                   </p>
-                  <p>
-                    <span className="font-semibold">Mobile:</span>{" "}
-                    {order.contactNumber}
+                  <p className="flex items-center gap-2">
+                    <FaPhone className="text-indigo-500" />
+                    <span className="font-semibold">{order.contactNumber}</span>
                   </p>
-                  <p>
-                    <span className="font-semibold">Payment Type:</span>{" "}
-                    {order.payment_type}
+                  <p className="flex items-center gap-2">
+                    <FaCreditCard className="text-purple-500" />
+                    <span className="font-semibold">{order.payment_type}</span>
                   </p>
                 </div>
+
+                {/* Action Buttons */}
                 <button
                   className={`mt-auto px-4 py-2 rounded text-green-500 border-2 border-green-500 transition font-semibold relative z-10 ${
                     order.status === "Delivered"
